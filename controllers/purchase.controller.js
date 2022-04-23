@@ -1,6 +1,7 @@
 const Items = require("../models/items.models");
 const PurchaseItems = require("../models/purchase.models");
 const { customAlphabet } = require("nanoid");
+const Amount = require("../models/cash.model");
 
 exports.purchaseItems = async (req, res) => {
   let items = req.body.items;
@@ -64,13 +65,21 @@ exports.purchaseItems = async (req, res) => {
             },
           }
         );
-
+           let refCode = nanoid
         // to save after customer purchased the items
         await new PurchaseItems({
           purchaseQuantity: quantity,
-          items_id: detailData._id,
-          refCode: nanoid,
+          item_id: detailData._id,
+          refCode,
+          pricePerItem: detailData.price
         }).save();
+
+          // to update the price 
+          await Amount.updateOne({},{
+            $inc:{
+              cash: payingPrice
+            }
+          })
 
         // here purchased is successful
         res.json({
@@ -79,8 +88,11 @@ exports.purchaseItems = async (req, res) => {
           data: {
             items,
             quantity,
+            refCode,
             payingPrice,
             returnCash,
+
+
           },
         });
       }

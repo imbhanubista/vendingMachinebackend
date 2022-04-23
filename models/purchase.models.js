@@ -3,8 +3,9 @@ const Items = require("./items.models");
 
 const purchaseSchema = mongoose.Schema({
   item_id: { type: String, ref: Items },
-  purchaseQuantity: String,
+  purchaseQuantity: Number,
   refCode: String,
+  pricePerItem: Number
 });
 
 const PurchaseItems = mongoose.model("PurchaseItems", purchaseSchema);
