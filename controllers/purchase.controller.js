@@ -7,6 +7,7 @@ exports.purchaseItems = async (req, res) => {
   let items = req.body.items;
   let cash = req.body.cash;
   let quantity = req.body.quantity;
+  console.log(req.body)
   const nanoid = customAlphabet("ad1r2", 5)();
   console.log(nanoid);
 

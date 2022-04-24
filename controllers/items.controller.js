@@ -18,6 +18,8 @@ const allItems = [
   },
 ];
 
+
+
 exports.addItems = async (req, res) => {
   // to check the items are loaded or not
   let itemsData = await Items.countDocuments({});
@@ -41,7 +43,10 @@ exports.addItems = async (req, res) => {
           }
         );
       }
-    } catch (err) {
+    
+    }
+    
+    catch (err) {
       res.json({
         type: "error",
         msg: err.message,
