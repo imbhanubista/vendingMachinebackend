@@ -16,9 +16,9 @@ router.get("/getall", totalData);
 router.post("/purchase", purchaseItems);
 
 // to load default money
-router.get("/cash", totalPrice)
+router.get("/cash", totalPrice);
 
 // to refund items
-router.post("/refund", refundItems)
+router.post("/refund", refundItems);
 
 module.exports = router;
