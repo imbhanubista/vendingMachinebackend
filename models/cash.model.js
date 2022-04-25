@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const priceSchema = mongoose.Schema({
-    cash: Number
-})
+  cash: Number,
+});
 
-const Amount = mongoose.model("Amount", priceSchema)
+const Amount = mongoose.model("Amount", priceSchema);
 
-module.exports = Amount
+module.exports = Amount;
