@@ -13,7 +13,9 @@ exports.purchaseItems = async (req, res) => {
 
   try {
     let detailData = await Items.findOne({ name: items });
-    // console.log(detailData);
+    let depositeAmt = await Amount.findOne({})
+    let returnCash = 0;
+    console.log(depositeAmt);
     if (detailData === null) {
       res.json({
         type: "error",
@@ -42,6 +44,7 @@ exports.purchaseItems = async (req, res) => {
         msg: "Order are out limit",
       });
     }
+     
     // to calculate the paying price
     else {
       let payingPrice = quantity * detailData.price;
@@ -51,12 +54,25 @@ exports.purchaseItems = async (req, res) => {
           msg: "Insufficient amount",
         });
       } 
+     
     //   to calculate the return money
       else {
-        let returnCash = 0;
+        // let returnCash = 0;
         if (cash > payingPrice) {
           returnCash = cash - payingPrice;
         }
+
+
+        console.log(returnCash,depositeAmt.cash)
+
+      if( returnCash > depositeAmt.cash){
+          res.json({
+            type:"error",
+            msg:"Don't have sufficient balance to return"
+          })
+        }
+        else{
+
         // to update the quantity after the purchase
         await Items.updateOne(
           { name: items },
@@ -98,7 +114,7 @@ exports.purchaseItems = async (req, res) => {
         });
       }
     }
-  } catch (err) {
+  } }catch (err) {
     res.json({
       type: "error",
       msg: err.message,
